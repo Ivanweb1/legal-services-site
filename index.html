@@ -1151,25 +1151,31 @@ section{padding:var(--section-y) 0}
 
 <script>
 /* Три цельных варианта главной: 1→все первые блоки, 2→все вторые, 3→все третьи. */
-function applyHomeVariant(v){
+var HOME_VARIANT_KEY = 'business-solutions-home-variant';
+
+function applyHomeVariant(v, persist){
+  if(!['1','2','3'].includes(v)) v = '1';
   document.body.dataset.homeVariant = v;
   document.querySelectorAll('.variant-wrap').forEach(function(wrap){
     wrap.querySelectorAll(':scope > .variant').forEach(function(sec){
       sec.classList.toggle('active', sec.dataset.v === v);
     });
-    wrap.querySelectorAll('.vbtn').forEach(function(btn){
-      var active = btn.dataset.v === v;
-      btn.classList.toggle('active', active);
-      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-      btn.textContent = 'Главная ' + btn.dataset.v;
-    });
   });
+  document.querySelectorAll('.vbtn').forEach(function(btn){
+    var active = btn.dataset.v === v;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    btn.textContent = 'Главная ' + btn.dataset.v;
+  });
+  if(persist){
+    try{ localStorage.setItem(HOME_VARIANT_KEY, v); }catch(e){}
+  }
 }
 
 document.querySelectorAll('.vbtn').forEach(function(btn){
   btn.addEventListener('click', function(){
     var wrap = btn.closest('.variant-wrap');
-    applyHomeVariant(btn.dataset.v);
+    applyHomeVariant(btn.dataset.v, true);
     if(wrap){
       var top = wrap.getBoundingClientRect().top + window.scrollY - 110;
       window.scrollTo({top:top,behavior:'smooth'});
@@ -1177,7 +1183,9 @@ document.querySelectorAll('.vbtn').forEach(function(btn){
   });
 });
 
-applyHomeVariant('1');
+var savedHomeVariant = '1';
+try{ savedHomeVariant = localStorage.getItem(HOME_VARIANT_KEY) || '1'; }catch(e){}
+applyHomeVariant(savedHomeVariant, false);
 
 /* Мобильное меню (заглушка) */
 document.querySelector('.burger') && document.querySelector('.burger').addEventListener('click', function(){
