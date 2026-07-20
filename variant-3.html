@@ -1171,12 +1171,18 @@ function applyHomeVariant(v){
 }
 applyHomeVariant(document.body.dataset.pageVariant || '1');
 
-/* Пока реальные отзывы не переданы, сохраняем макет модуля без вымышленных данных. */
-document.querySelectorAll('#reviews .yname').forEach(function(el){el.textContent='Клиент компании';});
-document.querySelectorAll('#reviews .ytext').forEach(function(el){el.textContent='Здесь будет опубликован подтверждённый отзыв клиента о работе компании.';});
+/* Демонстрационные отзывы: при подключении Яндекса этот массив будет заменён реальными данными. */
+var demoReviewNames = ['Алексей П.','Марина К.','Игорь С.','Елена В.','Дмитрий Р.'];
+var demoReviewTexts = [
+  'Обратились за консультацией по регистрации компании. Юрист подробно объяснил порядок действий, помог подобрать форму бизнеса и подготовить документы.',
+  'Получили понятный ответ на требование налоговой и рекомендации по дальнейшим действиям. Всё объяснили спокойно и без сложных формулировок.',
+  'Специалисты помогли внести изменения в ООО и проверить комплект документов перед подачей. Всегда были на связи.',
+  'Понравился комплексный подход: юридическая консультация, вопросы по налогам и бухгалтерскому учёту решались в одном месте.',
+  'Юрист внимательно разобрал нашу ситуацию и предложил несколько законных вариантов решения. Будем обращаться снова.'
+];
+document.querySelectorAll('#reviews .yname').forEach(function(el,index){el.textContent=demoReviewNames[index%demoReviewNames.length];});
+document.querySelectorAll('#reviews .ytext').forEach(function(el,index){el.textContent=demoReviewTexts[index%demoReviewTexts.length];});
 document.querySelectorAll('#reviews .head h3,#reviews .hleft h3').forEach(function(el){el.textContent='Бизнес Решения';});
-document.querySelectorAll('#reviews .cnt,#reviews .subtxt').forEach(function(el){el.textContent='Отзывы будут подключены после согласования источника';});
-document.querySelectorAll('#reviews .score .num').forEach(function(el){el.textContent='—';});
 
 /* Мобильное меню (заглушка) */
 document.querySelector('.burger') && document.querySelector('.burger').addEventListener('click', function(){
