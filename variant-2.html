@@ -84,7 +84,7 @@ body{
 /* На исходном сайте нет опубликованных сертификатов и подтверждённого модуля
    отзывов. В прототипе эти заготовки сохранены в коде, но скрыты до получения
    реальных материалов от клиента. */
-.variant-wrap[data-block="certs"],.variant-wrap[data-block="reviews"]{display:none}
+.variant-wrap[data-block="certs"]{display:none}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 b,strong{font-weight:600}
@@ -538,6 +538,7 @@ section{padding:var(--section-y) 0}
         <a href="#services">Услуги</a>
         <a href="#about">О компании</a>
         <a href="#blog">Полезное</a>
+        <a href="#reviews">Отзывы</a>
         <a href="#contacts">Контакты</a>
       </div>
       <div class="nav-cta">
@@ -1169,6 +1170,13 @@ function applyHomeVariant(v){
   });
 }
 applyHomeVariant(document.body.dataset.pageVariant || '1');
+
+/* Пока реальные отзывы не переданы, сохраняем макет модуля без вымышленных данных. */
+document.querySelectorAll('#reviews .yname').forEach(function(el){el.textContent='Клиент компании';});
+document.querySelectorAll('#reviews .ytext').forEach(function(el){el.textContent='Здесь будет опубликован подтверждённый отзыв клиента о работе компании.';});
+document.querySelectorAll('#reviews .head h3,#reviews .hleft h3').forEach(function(el){el.textContent='Бизнес Решения';});
+document.querySelectorAll('#reviews .cnt,#reviews .subtxt').forEach(function(el){el.textContent='Отзывы будут подключены после согласования источника';});
+document.querySelectorAll('#reviews .score .num').forEach(function(el){el.textContent='—';});
 
 /* Мобильное меню (заглушка) */
 document.querySelector('.burger') && document.querySelector('.burger').addEventListener('click', function(){
