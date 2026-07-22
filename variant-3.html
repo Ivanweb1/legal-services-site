@@ -84,7 +84,6 @@ body{
 /* На исходном сайте нет опубликованных сертификатов и подтверждённого модуля
    отзывов. В прототипе эти заготовки сохранены в коде, но скрыты до получения
    реальных материалов от клиента. */
-.variant-wrap[data-block="certs"]{display:none}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 b,strong{font-weight:600}
@@ -538,6 +537,7 @@ section{padding:var(--section-y) 0}
         <a href="#services">Услуги</a>
         <a href="#about">О компании</a>
         <a href="#blog">Полезное</a>
+        <a href="#certificates">Сертификаты</a>
         <a href="#reviews">Отзывы</a>
         <a href="#contacts">Контакты</a>
       </div>
@@ -850,7 +850,7 @@ section{padding:var(--section-y) 0}
 </section>
 
 <!-- ========================= СЕРТИФИКАТЫ (3 варианта) ========================= -->
-<div class="variant-wrap" data-block="certs">
+<div class="variant-wrap" data-block="certs" id="certificates">
   <div class="variant-bar">
     <span class="vb-label">Блок</span><span class="vb-name">Сертификаты</span>
     <span class="vb-spacer"></span>
@@ -1183,6 +1183,30 @@ var demoReviewTexts = [
 document.querySelectorAll('#reviews .yname').forEach(function(el,index){el.textContent=demoReviewNames[index%demoReviewNames.length];});
 document.querySelectorAll('#reviews .ytext').forEach(function(el,index){el.textContent=demoReviewTexts[index%demoReviewTexts.length];});
 document.querySelectorAll('#reviews .head h3,#reviews .hleft h3').forEach(function(el){el.textContent='Бизнес Решения';});
+/* Демонстрационный блок документов: заменить карточки реальными сканами после их получения. */
+var certLabels = ['Свидетельство о регистрации','Документ о квалификации','Профессиональный сертификат','Благодарственное письмо'];
+document.querySelectorAll('#certificates .cert-doc .cap').forEach(function(el,index){el.textContent=certLabels[index%certLabels.length];});
+document.querySelectorAll('#certificates .cert-doc .seal').forEach(function(el,index){el.textContent=['ОГРН','КВАЛ','СЕРТ','ОТЗЫВ'][index%4];});
+var certBadges = [
+  ['Регистрация','Документы о регистрации компании'],
+  ['Квалификация','Дипломы и профильные документы специалистов'],
+  ['Сертификаты','Профессиональное обучение и повышение квалификации'],
+  ['Благодарности','Письма и рекомендации клиентов'],
+  ['Реквизиты','ИНН и ОГРНИП компании']
+];
+document.querySelectorAll('#certificates .cert-badge').forEach(function(el,index){
+  var data=certBadges[index%certBadges.length];
+  var title=el.querySelector('b'), text=el.querySelector('span');
+  if(title) title.textContent=data[0];
+  if(text) text.textContent=data[1];
+});
+var certNumbers=[['15 лет','опыта сопровождения бизнеса'],['ИП','Кондратенко М. А.'],['ИНН','771365144342'],['ОГРНИП','311774633900871']];
+document.querySelectorAll('#certificates .cert-nums .nn').forEach(function(el,index){
+  var data=certNumbers[index%certNumbers.length];
+  var value=el.querySelector('b'), text=el.querySelector('span');
+  if(value) value.textContent=data[0];
+  if(text) text.textContent=data[1];
+});
 
 /* Мобильное меню (заглушка) */
 document.querySelector('.burger') && document.querySelector('.burger').addEventListener('click', function(){
